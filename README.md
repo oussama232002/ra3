@@ -606,3 +606,33 @@ const uint8 Scroll[] = {/*
     SPACE   ,  CROSS   ,   SPACE   ,     O     ,     r     ,   SPACE   ,     A     ,   SPACE   ,     T     ,     o     ,   SPACE   ,     N     ,     e     ,     x     ,     t     ,   SPACE   ,    MENU   , 
     SPACE   ,   UP     ,   SPACE   ,     O     ,     r     ,   SPACE   ,   DOWN    ,   SPACE   ,     T     ,     o     ,   SPACE   ,     A     ,     d     ,     j     ,     u     ,     s     ,     t     , 
     SPACE   ,  LEFT    ,   SPACE   ,     O     ,     r     ,   SPACE   ,   RIGHT   ,   SPACE   ,     N     ,     e     ,     x     ,     t     ,   SPACE   ,     M     ,     o     ,     d     ,   SPACE   };
+// تعيين متغير يحتوي على الدقة الافتراضية للتصويب
+int defaultAccuracy = 20;
+
+// تعيين متغير يحتوي على الدقة المرتفعة عند الضغط على زر LT
+int increasedAccuracy = 80;
+
+// تحديد الزر المرتبط بالتصويب
+define LT_BUTTON XB1_LT
+
+// الدالة الرئيسية لتطبيق دقة أعلى عند الضغط على زر LT
+main {
+    // الكود المسؤول عن قراءة حالة الزر LT في يد التحكم
+    if(get_val(LT_BUTTON)) {
+        // زيادة الدقة للقيمة المحددة
+        set_pvar(2, increasedAccuracy);
+    } else {
+        // استعادة الدقة الافتراضية
+        set_pvar(2, defaultAccuracy);
+    }
+
+    // كود السكريبت الثاني
+    if(get_val(13)) { // 13 يشير إلى زر RT على يد التحكم
+        int aimX = get_val(9); // 9 يشير إلى محور X للإيم
+        int aimY = get_val(10); // 10 يشير إلى محور Y للإيم
+        int targetX = get_val(11); // 11 يشير إلى محور X لهدفك
+        int targetY = get_val(12); // 12 يشير إلى محور Y لهدفك
+        set_val(9, targetX); // تعيين إحداثيات الإيم على محور X إلى إحداثيات الهدف على محور X
+        set_val(10, targetY); // تعيين إحداثيات الإيم على محور Y إلى إحداثيات الهدف على محور Y
+    }
+}
